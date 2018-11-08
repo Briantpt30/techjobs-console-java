@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.console;
 
+import com.sun.jdi.Value;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -10,6 +11,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -52,6 +54,25 @@ public class JobData {
         loadData();
 
         return allJobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        for (HashMap<String, String> element : allJobs) {
+            for (Map.Entry<String, String> line : element.entrySet()) {
+                String lineString = line.getValue();
+                if (lineString.toLowerCase().contains(value.toLowerCase())) {
+                    if (!jobs.contains(element)) {
+                        jobs.add(element);
+
+                    }
+                }
+
+            }
+
+        }
+        return jobs;
     }
 
     /**
